@@ -1,0 +1,75 @@
+.page {
+  max-width: 480px;
+  margin-inline: auto;
+  padding: var(--space-6) var(--screen-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 1;
+  text-align: center;
+  color: var(--color-chalk-white);
+}
+
+.accent {
+  color: var(--color-chalk-amber);
+}
+
+/* Temporary SketchFrame showcase — removed in Milestone 2. */
+.demoLabel {
+  font-size: 14px;
+  color: var(--color-dust-grey);
+  text-align: center;
+}
+
+.box {
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  color: var(--color-chalk-white);
+}
+
+.button {
+  composes: box;
+  height: 64px;
+  color: var(--color-chalk-green);
+  background-color: rgb(124 217 95 / 16%);
+}
+
+.label {
+  color: var(--color-chalk-white);
+}
+
+.input {
+  composes: box;
+  width: 220px;
+  height: 80px;
+  margin-inline: auto;
+  font-family: var(--font-numbers);
+  font-weight: 600;
+  font-size: 44px;
+}
+
+.picture {
+  composes: box;
+  height: 220px;
+  color: var(--color-chalk-yellow);
+}
+
+.counter {
+  composes: box;
+  height: 44px;
+  font-size: 14px;
+  color: var(--color-dust-grey);
+}
+
+.numbers {
+  font-family: var(--font-numbers);
+  font-weight: 600;
+  color: var(--color-chalk-amber);
+}

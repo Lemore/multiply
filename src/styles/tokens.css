@@ -1,0 +1,37 @@
+/* Design tokens from spec/DESIGN.md (Style Guide). */
+:root {
+  /* Base colors */
+  --color-board-green: #0c422c;
+  --color-chalk-white: #ffffff;
+  --color-dust-grey: #a8bfb2;
+  --color-frame-grey: #454445;
+  --color-nav-bg: #0a3a27;
+
+  /* Chalk accents */
+  --color-chalk-green: #7cd95f;
+  --color-chalk-orange: #ee7c4b;
+  --color-chalk-amber: #efbe40;
+  --color-chalk-blue: #889cfc;
+  --color-chalk-pink: #fb6ac3;
+  --color-chalk-yellow: #fdf5a7;
+  --color-chalk-mint: #abe9d5;
+
+  /* Fonts */
+  --font-fallback: system-ui, 'Arial Hebrew', Arial, sans-serif;
+  --font-display: 'Amatic SC', var(--font-fallback);
+  --font-ui: 'Varela Round', var(--font-fallback);
+  --font-numbers: 'Fredoka', var(--font-fallback);
+
+  /* Spacing (8px grid) */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --screen-gutter: 22px;
+
+  /* Outlines */
+  --stroke-width: 3px;
+  --radius: 5px;
+}

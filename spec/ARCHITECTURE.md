@@ -352,3 +352,12 @@ App Shell ──dispatch(feedbackDone)──► Reducer ──► Game Logic (ת
 - [vite-plugin-pwa – GitHub Releases](https://github.com/vite-pwa/vite-plugin-pwa/releases)
 - [GitHub Docs – GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits)
 - [MagicBell – PWA iOS Limitations and Safari Support](https://www.magicbell.com/blog/pwa-ios-limitations-safari-support-complete-guide)
+
+---
+
+## החלטות מרכזיות (ADRs)
+
+### ADR-1: קווי המסגרת של SketchFrame נשמרים כנתונים בקובץ TypeScript
+**הקשר:** סעיף 2.3 מתאר את המסגרות ה"מצוירות ביד" כקובצי SVG בתיקיית `src/assets/frames`. כדי להשתמש בקובץ SVG כרכיב React (ולצבוע אותו ב-`currentColor` עם `vector-effect`) נדרש תוסף נוסף ל-Vite, או הזרקת HTML גולמי.
+**החלטה:** מחרוזות הקו (`d`) של שלוש וריאציות המסגרת נשמרות בקובץ `src/assets/frames/framePaths.ts`, והרכיב `SketchFrame` מצייר אותן ישירות כ-SVG בתוך ה-HTML (inline). המקווקו מתקבל מאותו קו עם `stroke-dasharray`.
+**השלכות:** אין תלות נוספת, ו-`currentColor` ועובי קו קבוע עובדים בלי הגדרות מיוחדות. הוספת צורת מסגרת חדשה פירושה הוספת מחרוזת לקובץ, ולא קובץ SVG. הקווים נכללים בקובץ ה-JS, ולכן גם בעבודה ללא אינטרנט.

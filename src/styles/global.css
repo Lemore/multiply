@@ -1,0 +1,28 @@
+/* Only the weights and subsets in use; files are bundled locally (no external requests). */
+@import '@fontsource/amatic-sc/hebrew-700.css';
+@import '@fontsource/amatic-sc/latin-700.css';
+@import '@fontsource/varela-round/hebrew-400.css';
+@import '@fontsource/varela-round/latin-400.css';
+@import '@fontsource/fredoka/hebrew-600.css';
+@import '@fontsource/fredoka/latin-600.css';
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background-color: var(--color-board-green);
+  color: var(--color-chalk-white);
+  font-family: var(--font-ui);
+  font-size: 18px;
+  line-height: 1.5;
+}

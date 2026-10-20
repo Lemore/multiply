@@ -59,3 +59,4 @@
 > Claude ממלא זאת ברגע שהאפליקציה יכולה לרוץ (בדרך כלל בסיום Milestone 1), ומעדכן אם משהו משתנה.
 - **הרצה (dev):** `npm run dev` (כתובת: `http://localhost:5173/multiply/`)
 - **בדיקות (test):** `npm test`
+- **בדיקת PWA ועבודה ללא אינטרנט:** `npm run build` ואז `npm run preview` (כתובת: `http://localhost:4173/multiply/`)

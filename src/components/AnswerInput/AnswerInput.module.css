@@ -1,0 +1,51 @@
+.frame {
+  width: 220px;
+  max-width: 100%;
+  margin-inline: auto;
+  border-radius: var(--radius);
+  color: var(--color-chalk-white);
+}
+
+/* Focus turns the outline blue; result states below override it during feedback. */
+.frame:focus-within {
+  color: var(--color-chalk-blue);
+}
+
+.frame.correct {
+  color: var(--color-chalk-green);
+}
+
+.frame.wrong {
+  color: var(--color-chalk-orange);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  height: 80px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--color-chalk-white);
+  font-family: var(--font-numbers);
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 1;
+  text-align: center;
+  caret-color: var(--color-chalk-blue);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--color-dust-grey);
+  opacity: 1;
+}
+
+.correct .input {
+  color: var(--color-chalk-green);
+}
+
+.wrong .input {
+  color: var(--color-chalk-orange);
+}

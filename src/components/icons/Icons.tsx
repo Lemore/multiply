@@ -59,3 +59,30 @@ export function ChevronDownIcon(props: IconProps) {
     </Icon>
   );
 }
+
+export function CheckIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4.2 12.6 Q7 15.2 9.6 18.3 Q14.2 11.4 19.9 5.6" />
+    </Icon>
+  );
+}
+
+export function CrossIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M5.6 5.4 Q12 11.8 18.5 18.7" />
+      <path d="M18.4 5.5 Q12.2 11.9 5.5 18.5" />
+    </Icon>
+  );
+}
+
+export function BulbIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M9.1 16.4 Q8.9 14.6 7.5 13.2 Q5.4 10.9 6.1 8 Q7.2 3.9 12 3.6 Q16.8 3.9 17.9 8.1 Q18.5 11 16.4 13.2 Q15 14.6 14.9 16.4 Z" />
+      <path d="M9.4 19.1 Q12 19.4 14.6 19" />
+      <path d="M10.4 21.3 Q12 21.5 13.6 21.2" />
+    </Icon>
+  );
+}

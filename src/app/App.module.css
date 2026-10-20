@@ -8,3 +8,9 @@
   padding-block: var(--space-4) calc(var(--nav-height) + env(safe-area-inset-bottom) + var(--space-3));
   padding-inline: var(--screen-gutter);
 }
+
+/* Keyboard open: the nav is hidden, so drop its reserved space and tighten the top. */
+.compact {
+  min-height: 0;
+  padding-block: var(--space-1);
+}

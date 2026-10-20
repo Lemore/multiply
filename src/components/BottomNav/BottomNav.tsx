@@ -7,6 +7,8 @@ import styles from './BottomNav.module.css';
 type BottomNavProps = {
   current: Screen;
   onNavigate: (screen: Screen) => void;
+  // Hidden while the phone keyboard is open, so it never jumps above the keyboard.
+  hidden?: boolean;
 };
 
 // DOM order is home → learn → about; dir="rtl" places "home" on the right.
@@ -16,9 +18,9 @@ const items: { screen: Screen; label: string; Icon: ComponentType }[] = [
   { screen: 'about', label: strings.nav.about, Icon: InfoIcon },
 ];
 
-export function BottomNav({ current, onNavigate }: BottomNavProps) {
+export function BottomNav({ current, onNavigate, hidden = false }: BottomNavProps) {
   return (
-    <nav className={styles.nav} aria-label={strings.nav.ariaLabel}>
+    <nav className={styles.nav} aria-label={strings.nav.ariaLabel} hidden={hidden}>
       <div className={styles.items}>
         {items.map(({ screen, label, Icon }) => {
           const active = screen === current;

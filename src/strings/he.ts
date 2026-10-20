@@ -18,6 +18,18 @@ export const strings = {
 
   learn: {
     title: 'לימוד',
+    // Counter "תרגיל X מתוך 10": words and numbers are rendered separately so numbers can be colored.
+    counterExercise: 'תרגיל',
+    counterOf: 'מתוך',
+    answerLabel: (a: number, b: number) => `${a} כפול ${b}`,
+    check: 'בדיקה',
+    gameOver: 'סוף המשחק',
+    feedback: {
+      // One is picked at random for each correct answer.
+      correct: ['כל הכבוד!', 'נכון! כל הכבוד!', 'מעולה!', 'תשובה נכונה!', 'נכון!'],
+      wrong: 'אופס! נסו שוב',
+      reveal: 'לא נורא! התשובה:',
+    },
   },
 
   about: {

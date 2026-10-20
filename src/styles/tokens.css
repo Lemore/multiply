@@ -6,6 +6,7 @@
   --color-dust-grey: #a8bfb2;
   --color-frame-grey: #454445;
   --color-nav-bg: #0a3a27;
+  --color-disabled: #5f7f6d; /* muted grey-green for disabled controls */
 
   /* Chalk accents */
   --color-chalk-green: #7cd95f;

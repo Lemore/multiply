@@ -1,0 +1,57 @@
+.frame {
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+.none {
+  color: rgb(168 191 178 / 45%);
+}
+
+.correct {
+  color: var(--color-chalk-green);
+}
+
+.wrong {
+  color: var(--color-chalk-orange);
+}
+
+.revealAnswer {
+  color: var(--color-chalk-yellow);
+}
+
+/* Icon first, so in RTL it sits on the right with the text beside it. */
+.message {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding-inline: var(--space-2);
+  color: var(--color-chalk-white);
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.icon {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.correct .icon {
+  color: var(--color-chalk-green);
+}
+
+.wrong .icon {
+  color: var(--color-chalk-orange);
+}
+
+.revealAnswer .icon {
+  color: var(--color-chalk-yellow);
+}
+
+.number {
+  font-family: var(--font-numbers);
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--color-chalk-yellow);
+}

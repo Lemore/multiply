@@ -9,6 +9,10 @@
   border-block-start: 1px solid rgb(168 191 178 / 35%);
 }
 
+.nav[hidden] {
+  display: none;
+}
+
 .items {
   display: flex;
   height: 100%;

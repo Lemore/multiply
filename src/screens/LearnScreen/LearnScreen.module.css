@@ -1,0 +1,55 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.counter {
+  width: 100%;
+  border-radius: var(--radius);
+  color: var(--color-dust-grey);
+}
+
+.counterText {
+  padding-block: 10px;
+  color: var(--color-dust-grey);
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.counterNumber {
+  font-family: var(--font-numbers);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--color-chalk-amber);
+}
+
+.exercise {
+  font-family: var(--font-numbers);
+  font-weight: 600;
+  font-size: clamp(72px, 24vw, 96px);
+  line-height: 1;
+  text-align: center;
+  color: var(--color-chalk-white);
+  white-space: nowrap;
+}
+
+.times {
+  color: var(--color-chalk-pink);
+}
+
+/* Keyboard open: shrink spacing and the exercise so everything fits above the keyboard. */
+.compact {
+  gap: var(--space-1);
+}
+
+.compact .counterText {
+  padding-block: 4px;
+}
+
+.compact .exercise {
+  font-size: 56px;
+}

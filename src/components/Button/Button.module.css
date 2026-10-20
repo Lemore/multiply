@@ -13,6 +13,15 @@
   background-color: rgb(251 106 195 / 8%);
 }
 
+.disabled {
+  color: var(--color-disabled);
+}
+
+.disabled .button {
+  color: var(--color-disabled);
+  cursor: default;
+}
+
 .button {
   display: block;
   width: 100%;

@@ -1,0 +1,51 @@
+.frame {
+  width: 100%;
+  padding: 6px;
+  color: var(--color-chalk-mint);
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-family: var(--font-numbers);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1;
+  text-align: center;
+  color: var(--color-chalk-white);
+}
+
+.table th,
+.table td {
+  height: 29px;
+  padding: 0;
+  border: 1px solid rgb(168 191 178 / 25%);
+}
+
+/* No outer grid lines: the chalk frame is the border. */
+.table tr:first-child > * {
+  border-block-start: none;
+}
+.table tr:last-child > * {
+  border-block-end: none;
+}
+.table tr > :first-child {
+  border-inline-start: none;
+}
+.table tr > :last-child {
+  border-inline-end: none;
+}
+
+.header {
+  color: var(--color-chalk-amber);
+  font-weight: 600;
+}
+
+.corner {
+  color: var(--color-chalk-pink);
+}
+
+.diagonal {
+  color: var(--color-chalk-yellow);
+}

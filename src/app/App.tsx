@@ -1,34 +1,31 @@
-import { SketchFrame } from '../components/SketchFrame/SketchFrame.tsx';
-import { strings } from '../strings/he.ts';
+import { useState } from 'react';
+import { BottomNav } from '../components/BottomNav/BottomNav.tsx';
+import type { PracticeMode, Screen } from '../game/types.ts';
+import { AboutScreen } from '../screens/AboutScreen/AboutScreen.tsx';
+import { HomeScreen } from '../screens/HomeScreen/HomeScreen.tsx';
+import { LearnScreen } from '../screens/LearnScreen/LearnScreen.tsx';
 import styles from './App.module.css';
 
-// Temporary page for Milestone 1: app name + SketchFrame showcase in several sizes.
+// App Shell: holds the current screen and the mode picked on the home screen (no router).
 export default function App() {
+  const [currentScreen, setCurrentScreen] = useState<Screen>('home');
+  const [selectedMode, setSelectedMode] = useState<PracticeMode>('all');
+
+  const navigate = (screen: Screen) => {
+    setCurrentScreen(screen);
+    window.scrollTo(0, 0);
+  };
+
   return (
-    <main className={styles.page}>
-      <h1 className={styles.title}>
-        {strings.appName.first} <span className={styles.accent}>{strings.appName.second}</span>
-      </h1>
-
-      <p className={styles.demoLabel}>דוגמאות מסגרת (זמני)</p>
-
-      <SketchFrame variant="dashed" shape={2} className={styles.counter}>
-        <span className={styles.label}>
-          תרגיל <span className={styles.numbers}>3</span> מתוך <span className={styles.numbers}>10</span>
-        </span>
-      </SketchFrame>
-
-      <SketchFrame shape={3} className={styles.input}>
-        <span dir="ltr">56</span>
-      </SketchFrame>
-
-      <SketchFrame className={styles.button}>
-        <span className={styles.label}>בדיקה</span>
-      </SketchFrame>
-
-      <SketchFrame shape={2} className={styles.picture}>
-        <span className={styles.label}>מסגרת תמונה</span>
-      </SketchFrame>
-    </main>
+    <>
+      <main className={styles.content}>
+        {currentScreen === 'home' && (
+          <HomeScreen selectedMode={selectedMode} onModeChange={setSelectedMode} onStart={() => navigate('learn')} />
+        )}
+        {currentScreen === 'learn' && <LearnScreen />}
+        {currentScreen === 'about' && <AboutScreen />}
+      </main>
+      <BottomNav current={currentScreen} onNavigate={navigate} />
+    </>
   );
 }

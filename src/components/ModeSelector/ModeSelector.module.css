@@ -1,0 +1,39 @@
+.frame {
+  width: 100%;
+  color: var(--color-chalk-white);
+}
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  height: 60px;
+  padding-inline: 20px 52px;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--color-chalk-white);
+  font-family: var(--font-ui);
+  font-size: 22px; /* ≥16px prevents iOS auto-zoom */
+  cursor: pointer;
+}
+
+.select:focus-visible {
+  outline: 2px solid var(--color-chalk-blue);
+  outline-offset: 4px;
+}
+
+/* Readable list on desktop browsers that render options in-page. */
+.select option {
+  background-color: var(--color-board-green);
+  color: var(--color-chalk-white);
+}
+
+.chevron {
+  position: absolute;
+  inset-inline-end: 18px;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}

@@ -31,6 +31,10 @@
   --space-6: 48px;
   --screen-gutter: 22px;
 
+  /* Layout */
+  --content-max-width: 480px;
+  --nav-height: 86px;
+
   /* Outlines */
   --stroke-width: 3px;
   --radius: 5px;

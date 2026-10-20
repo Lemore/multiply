@@ -1,0 +1,52 @@
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 1;
+  text-align: center;
+  color: var(--color-chalk-white);
+}
+
+.accent {
+  color: var(--color-chalk-amber);
+}
+
+.picture {
+  width: 100%;
+  padding: 4px;
+  color: var(--color-chalk-yellow);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 6 / 5;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.modeLabel {
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-chalk-white);
+}
+
+/* Pushes the primary action to the bottom of the content area, above the nav. */
+.action {
+  margin-block-start: auto;
+  padding-block-start: var(--space-3);
+}

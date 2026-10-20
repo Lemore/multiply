@@ -41,6 +41,12 @@ export const initialGameState: GameState = {
   feedback: { kind: 'none' },
 };
 
+// The home button continues the current game only if one is being played
+// in the mode shown in the menu; otherwise it starts a new game.
+export function canContinue(state: GameState, selectedMode: PracticeMode): boolean {
+  return state.status === 'playing' && state.mode === selectedMode;
+}
+
 export function startGame(mode: PracticeMode, random: Random = Math.random): GameState {
   return {
     ...initialGameState,

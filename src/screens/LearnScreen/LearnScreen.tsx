@@ -13,6 +13,8 @@ type LearnScreenProps = {
   answer: string;
   onAnswerChange: (value: string) => void;
   onSubmit: (value: number) => void;
+  // Starts a new game in the same mode from the summary.
+  onPlayAgain: () => void;
   // Tighter layout while the phone keyboard is open.
   compact?: boolean;
 };
@@ -23,7 +25,7 @@ function answerState(feedback: Feedback): AnswerState {
   return 'default';
 }
 
-export function LearnScreen({ game, answer, onAnswerChange, onSubmit, compact = false }: LearnScreenProps) {
+export function LearnScreen({ game, answer, onAnswerChange, onSubmit, onPlayAgain, compact = false }: LearnScreenProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const isPlaying = game.status === 'playing' && game.current !== null;
 
@@ -33,12 +35,24 @@ export function LearnScreen({ game, answer, onAnswerChange, onSubmit, compact = 
   }, [isPlaying]);
 
   if (game.status === 'finished') {
-    // Temporary end state; the full summary arrives in Milestone 4.
+    const { summary } = strings.learn;
     return (
-      <div className={styles.screen}>
+      <div className={[styles.screen, styles.summary].join(' ')}>
         <SketchFrame variant="dashed" className={styles.counter}>
-          <h1 className={styles.counterText}>{strings.learn.gameOver}</h1>
+          <h1 className={styles.counterText}>{summary.title}</h1>
         </SketchFrame>
+
+        <div className={styles.result}>
+          <p className={styles.resultLabel}>{summary.correctLabel}</p>
+          <p className={styles.score}>
+            <span className={styles.scoreValue}>{game.firstTryCorrect}</span>{' '}
+            <span className={styles.scoreOf}>{summary.of}</span> <span className={styles.scoreTotal}>{GAME_LENGTH}</span>
+          </p>
+        </div>
+
+        <Button variant="secondary" onClick={onPlayAgain}>
+          {summary.playAgain}
+        </Button>
       </div>
     );
   }

@@ -9,9 +9,13 @@ function game(overrides: Partial<GameState> = {}): GameState {
   return { ...initialGameState, status: 'playing', current: { a: 7, b: 8 }, exerciseNumber: 3, ...overrides };
 }
 
-function Harness({ state, onSubmit = () => {} }: { state: GameState; onSubmit?: (v: number) => void }) {
+type HarnessProps = { state: GameState; onSubmit?: (v: number) => void; onPlayAgain?: () => void };
+
+function Harness({ state, onSubmit = () => {}, onPlayAgain = () => {} }: HarnessProps) {
   const [answer, setAnswer] = useState('');
-  return <LearnScreen game={state} answer={answer} onAnswerChange={setAnswer} onSubmit={onSubmit} />;
+  return (
+    <LearnScreen game={state} answer={answer} onAnswerChange={setAnswer} onSubmit={onSubmit} onPlayAgain={onPlayAgain} />
+  );
 }
 
 const input = () => screen.getByLabelText('7 כפול 8') as HTMLInputElement;
@@ -62,6 +66,7 @@ describe('LearnScreen', () => {
         answer="5"
         onAnswerChange={() => {}}
         onSubmit={onSubmit}
+        onPlayAgain={() => {}}
       />,
     );
     expect(input().readOnly).toBe(true);
@@ -83,8 +88,18 @@ describe('LearnScreen', () => {
     expect(screen.getByRole('status').textContent).toBe(text);
   });
 
-  it('shows "סוף המשחק" when the game is finished', () => {
-    render(<Harness state={game({ status: 'finished' })} />);
-    expect(screen.getByRole('heading', { name: 'סוף המשחק' })).toBeTruthy();
+  it('shows the summary with the score when the game is finished', () => {
+    render(<Harness state={game({ status: 'finished', firstTryCorrect: 7 })} />);
+    expect(screen.getByRole('heading', { level: 1, name: 'סוף המשחק' })).toBeTruthy();
+    expect(screen.getByText('תשובות נכונות')).toBeTruthy();
+    expect(screen.getByText('מתוך').parentElement!.textContent).toBe('7 מתוך 10');
+    expect(screen.queryByRole('button', { name: 'בדיקה' })).toBeNull();
+  });
+
+  it('"שחק שוב" calls onPlayAgain', () => {
+    const onPlayAgain = vi.fn();
+    render(<Harness state={game({ status: 'finished' })} onPlayAgain={onPlayAgain} />);
+    fireEvent.click(screen.getByRole('button', { name: 'שחק שוב' }));
+    expect(onPlayAgain).toHaveBeenCalledOnce();
   });
 });

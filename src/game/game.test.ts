@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createExercise, finishFeedback, GAME_LENGTH, initialGameState, startGame, submitAnswer, type Random } from './game.ts';
+import { canContinue, createExercise, finishFeedback, GAME_LENGTH, initialGameState, startGame, submitAnswer, type Random } from './game.ts';
 import type { Exercise, GameState } from './types.ts';
 
 // Deterministic pseudo-random generator (LCG) for repeatable tests.
@@ -153,5 +153,85 @@ describe('submitAnswer and finishFeedback', () => {
       expect(index).toBeGreaterThanOrEqual(0);
       expect(index).toBeLessThan(MESSAGES);
     }
+  });
+});
+
+// Plays a full game; `firstTry[i]` says whether exercise i+1 is answered right on the first attempt.
+// Otherwise it is solved on attempt `laterAttempt` (2 or 3), or never (4 = answer revealed).
+function playGame(firstTry: boolean[], laterAttempt: 2 | 3 | 4 = 2, mode: GameState['mode'] = 'all'): GameState {
+  const random = seeded(21);
+  let state = startGame(mode, random);
+  for (const right of firstTry) {
+    const wrongTries = right ? 0 : laterAttempt - 1;
+    for (let i = 0; i < Math.min(wrongTries, 3); i++) state = finishFeedback(submitAnswer(state, 0, MESSAGES, random), random);
+    if (wrongTries < 3) state = finishFeedback(submitAnswer(state, answerOf(state), MESSAGES, random), random);
+  }
+  return state;
+}
+
+describe('scoring', () => {
+  const seven = [true, true, false, true, true, false, true, true, false, true];
+
+  it('counts only exercises solved on the first attempt', () => {
+    for (const later of [2, 3, 4] as const) {
+      const state = playGame(seven, later);
+      expect(state.status).toBe('finished');
+      expect(state.firstTryCorrect).toBe(7);
+    }
+  });
+
+  it('scores 10 when all are right first time, and 0 when none are', () => {
+    expect(playGame(Array(10).fill(true)).firstTryCorrect).toBe(10);
+    expect(playGame(Array(10).fill(false), 3).firstTryCorrect).toBe(0);
+  });
+
+  it('a correct answer on the third attempt does not add to the score', () => {
+    let state = playing({ a: 2, b: 3 });
+    for (let i = 0; i < 2; i++) state = finishFeedback(submitAnswer(state, 5, MESSAGES));
+    state = submitAnswer(state, 6, MESSAGES);
+    expect(state.feedback.kind).toBe('correct');
+    expect(state.firstTryCorrect).toBe(0);
+  });
+});
+
+describe('game status transitions', () => {
+  it('starts idle, with nothing to continue', () => {
+    expect(initialGameState.status).toBe('idle');
+    expect(canContinue(initialGameState, 'all')).toBe(false);
+  });
+
+  it('idle → playing: continues only in the same mode', () => {
+    const state = startGame(7, seeded());
+    expect(state.status).toBe('playing');
+    expect(canContinue(state, 7)).toBe(true);
+    expect(canContinue(state, 3)).toBe(false);
+    expect(canContinue(state, 'all')).toBe(false);
+  });
+
+  it('playing → finished after 10 exercises keeps the score, and cannot be continued', () => {
+    const state = playGame(Array(10).fill(true), 2, 5);
+    expect(state).toMatchObject({ status: 'finished', mode: 5, firstTryCorrect: 10 });
+    expect(canContinue(state, 5)).toBe(false);
+  });
+
+  it('finished → playing again in the same mode resets the game', () => {
+    const finished = playGame(Array(10).fill(true), 2, 5);
+    const again = startGame(finished.mode, seeded(2));
+    expect(again).toMatchObject({ status: 'playing', mode: 5, exerciseNumber: 1, firstTryCorrect: 0, attemptsUsed: 0 });
+  });
+
+  it('playing → a new game in another mode starts over', () => {
+    let state = startGame(7, seeded());
+    state = finishFeedback(submitAnswer(state, answerOf(state), MESSAGES));
+    state = submitAnswer(state, 0, MESSAGES);
+    const fresh = startGame(3, seeded(4));
+    expect(fresh).toMatchObject({ status: 'playing', mode: 3, exerciseNumber: 1, firstTryCorrect: 0, attemptsUsed: 0 });
+    expect(fresh.current!.a === 3 || fresh.current!.b === 3).toBe(true);
+  });
+
+  it('ignores answers and feedback ends once finished', () => {
+    const finished = playGame(Array(10).fill(true));
+    expect(submitAnswer(finished, 1, MESSAGES)).toBe(finished);
+    expect(finishFeedback(finished)).toBe(finished);
   });
 });

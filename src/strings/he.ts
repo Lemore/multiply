@@ -14,6 +14,7 @@ export const strings = {
     modeLabel: 'מצב משחק',
     modeAll: 'הכול',
     start: 'התחל משחק',
+    continue: 'המשך משחק',
   },
 
   learn: {
@@ -23,7 +24,12 @@ export const strings = {
     counterOf: 'מתוך',
     answerLabel: (a: number, b: number) => `${a} כפול ${b}`,
     check: 'בדיקה',
-    gameOver: 'סוף המשחק',
+    summary: {
+      title: 'סוף המשחק',
+      correctLabel: 'תשובות נכונות',
+      of: 'מתוך',
+      playAgain: 'שחק שוב',
+    },
     feedback: {
       // One is picked at random for each correct answer.
       correct: ['כל הכבוד!', 'נכון! כל הכבוד!', 'מעולה!', 'תשובה נכונה!', 'נכון!'],

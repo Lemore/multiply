@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from 'react';
 import { BottomNav } from '../components/BottomNav/BottomNav.tsx';
-import { FEEDBACK_DURATION_MS, finishFeedback, initialGameState, startGame, submitAnswer } from '../game/game.ts';
+import { canContinue, FEEDBACK_DURATION_MS, finishFeedback, initialGameState, startGame, submitAnswer } from '../game/game.ts';
 import type { GameState, PracticeMode, Screen } from '../game/types.ts';
 import { AboutScreen } from '../screens/AboutScreen/AboutScreen.tsx';
 import { HomeScreen } from '../screens/HomeScreen/HomeScreen.tsx';
@@ -44,15 +44,24 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [game.phase]);
 
+  const startNewGame = (mode: PracticeMode) => {
+    dispatch({ type: 'startGame', mode });
+    setAnswer('');
+  };
+
   const navigate = (screen: Screen) => {
+    // Opening the learn tab with no game yet starts one in the mode picked on the home screen.
+    if (screen === 'learn' && game.status === 'idle') startNewGame(selectedMode);
     setCurrentScreen(screen);
     window.scrollTo(0, 0);
   };
 
+  const continueGame = canContinue(game, selectedMode);
+
   const handleStart = () => {
-    dispatch({ type: 'startGame', mode: selectedMode });
-    setAnswer('');
-    navigate('learn');
+    if (!continueGame) startNewGame(selectedMode);
+    setCurrentScreen('learn');
+    window.scrollTo(0, 0);
   };
 
   // Keep the exercise in view when Safari scrolls toward the focused answer box.
@@ -66,7 +75,12 @@ export default function App() {
     <>
       <main className={[styles.content, compact ? styles.compact : ''].join(' ')}>
         {currentScreen === 'home' && (
-          <HomeScreen selectedMode={selectedMode} onModeChange={setSelectedMode} onStart={handleStart} />
+          <HomeScreen
+            selectedMode={selectedMode}
+            onModeChange={setSelectedMode}
+            canContinue={continueGame}
+            onStart={handleStart}
+          />
         )}
         {currentScreen === 'learn' && (
           <LearnScreen
@@ -74,6 +88,7 @@ export default function App() {
             answer={answer}
             onAnswerChange={setAnswer}
             onSubmit={(value) => dispatch({ type: 'submitAnswer', value })}
+            onPlayAgain={() => startNewGame(game.mode)}
             compact={compact}
           />
         )}

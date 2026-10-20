@@ -24,4 +24,13 @@ describe('HomeScreen', () => {
     fireEvent.click(screen.getByRole('button', { name: 'התחל משחק' }));
     expect(onStart).toHaveBeenCalledOnce();
   });
+
+  it('shows "המשך משחק" with an enabled menu when a game can be continued', () => {
+    const onStart = vi.fn();
+    render(<HomeScreen selectedMode={7} onModeChange={() => {}} canContinue onStart={onStart} />);
+    expect(screen.queryByRole('button', { name: 'התחל משחק' })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'המשך משחק' }));
+    expect(onStart).toHaveBeenCalledOnce();
+    expect((screen.getByLabelText('מצב משחק') as HTMLSelectElement).disabled).toBe(false);
+  });
 });

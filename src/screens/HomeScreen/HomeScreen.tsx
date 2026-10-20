@@ -8,12 +8,14 @@ import styles from './HomeScreen.module.css';
 type HomeScreenProps = {
   selectedMode: PracticeMode;
   onModeChange: (mode: PracticeMode) => void;
+  // A game in the selected mode is in progress: the button continues it instead of starting anew.
+  canContinue?: boolean;
   onStart: () => void;
 };
 
 const MODE_SELECT_ID = 'mode-select';
 
-export function HomeScreen({ selectedMode, onModeChange, onStart }: HomeScreenProps) {
+export function HomeScreen({ selectedMode, onModeChange, canContinue = false, onStart }: HomeScreenProps) {
   return (
     <div className={styles.screen}>
       <h1 className={styles.title}>
@@ -38,7 +40,7 @@ export function HomeScreen({ selectedMode, onModeChange, onStart }: HomeScreenPr
       </div>
 
       <div className={styles.action}>
-        <Button onClick={onStart}>{strings.home.start}</Button>
+        <Button onClick={onStart}>{canContinue ? strings.home.continue : strings.home.start}</Button>
       </div>
     </div>
   );
